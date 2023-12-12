@@ -1,11 +1,14 @@
 const asyncHandler = require("express-async-handler");
 
+const Users = require("../models/userModel");
+
 //@desc Gets All Users
 //@route GET /api/users/all
 //@access public
 
 const getAllUser = asyncHandler( async (req, res) => {
-    await res.status(200).json({ message: "Get All Users" });
+    const users = await Users.find();
+    res.status(200).json(users);
 });
 
 //@desc Gets Single User
@@ -13,7 +16,8 @@ const getAllUser = asyncHandler( async (req, res) => {
 //@access public
 
 const getSingleUser = asyncHandler( async (req, res) => {
-    await res.status(200).json({ message: `Get User with id: ${req.params.id}` });
+    const user = await Users.findById(req.params.id);
+    res.status(200).json(user);
 })
 
 //@desc Update Single User
@@ -21,7 +25,13 @@ const getSingleUser = asyncHandler( async (req, res) => {
 //@access public
 
 const updateSingleUser = asyncHandler( async (req, res) => {
-    await res.status(200).json({ message: `Updates User with id: ${req.params.id}` });
+    const user = await Users.findById(req.params.id);
+    if(!user) {
+        res.status(404);
+        throw new Error("User Not Found");
+    }
+    const updatedUser = await Users.findByIdAndUpdate( req.params.id, req.body, { new: true } );
+    res.status(200).json(updatedUser);
 });
 
 
@@ -30,7 +40,13 @@ const updateSingleUser = asyncHandler( async (req, res) => {
 //@access public
 
 const DeleteSingleUser = asyncHandler( async (req, res) => {
-    await res.status(200).json({ message: `Deletes User with id: ${req.params.id}` });
+    const user = await Users.findById(req.params.id);
+    if(!user) {
+        res.status(404);
+        throw new Error("User Not Found");
+    }
+    const deletedUser = await Users.findByIdAndDelete(req.params.id);
+    res.status(200).json(deletedUser);
 });
 
 
@@ -44,7 +60,13 @@ const createSingleUser = asyncHandler( async (req, res) => {
         res.status(404);
         throw new Error("All Fields are mandatory");
     }
-    res.status(200).json({ message: `Creates User with name: ${name}, address: ${address}, email: ${email} and mobile: ${mobile} ` });
+    const user = await Users.create({
+        name,
+        email,
+        address,
+        phone
+    });
+    res.status(200).json(user);
 });
 
 
