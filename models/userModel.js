@@ -16,6 +16,14 @@ const userModel = mongoose.Schema({
         phone:{
             type: Number,
             required: [true, "Mobile is required"]
+        },
+        orders:{
+            type: Number,
+            default: 0
+        },
+        adminId:{
+            type: String,
+            required:[true, "Admin ID is required"]
         }
     },
     {
