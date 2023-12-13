@@ -25,7 +25,7 @@ const loginSingleAdmin = asyncHandler( async (req, res) => {
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1m" }
+        { expiresIn: "365d" }
         );
         res.status(200).json(accessToken);
     }
