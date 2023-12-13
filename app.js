@@ -3,6 +3,7 @@ const app = express();
 const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
 const frameRoutes = require("./routes/frameRoutes");
+const lensRoutes = require("./routes/lensRoutes");
 const errorHandler = require('./middlewares/errorHandler');
 const ConnectDB = require("./config/dbConfig");
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/admins/", adminRoutes);
 app.use("/api/users/", userRoutes);
 app.use("/api/frames/", frameRoutes);
+app.use("/api/lenses/", lensRoutes);
 app.use(errorHandler);
 
 module.exports = app;

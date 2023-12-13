@@ -32,19 +32,19 @@ const createFrame = asyncHandler( async (req, res) => {
         !brand ||
         !gender ||
         !color ||
-        !size ||
+        !size === '' ||
         !type ||
         !shape ||
         !material ||
         !temple ||
-        !bridge_size ||
-        !hsn_code ||
-        !tax ||
-        !base_price ||
-        !purchase_price ||
-        !retail_price ||
-        !discount_price ||
-        !inventory
+        !bridge_size  === '' ||
+        !hsn_code  === '' ||
+        !tax  === '' ||
+        !base_price  === '' ||
+        !purchase_price  === '' ||
+        !retail_price  === '' ||
+        !discount_price  === '' ||
+        !inventory === '' 
     ){
         res.status(401);
         throw new Error("All Fields are mandatory");

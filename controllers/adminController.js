@@ -30,6 +30,15 @@ const updateSingleAdmin = asyncHandler( async (req, res) => {
         res.status(404);
         throw new Error("Admin Not Found");
     }
+    const { email, password } = req.body;
+    let hashedPass = admin.password;
+    if(password){
+        hashedPass = await bcrypt.hash(password, 10);
+    }
+    req.body = {
+        email,
+        password: hashedPass,
+    };
     const updatedAdmin = await Admin.findByIdAndUpdate( req.params.id, req.body, { new: true } );
     res.status(200).json(updatedAdmin);
 });
