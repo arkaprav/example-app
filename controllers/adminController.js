@@ -1,6 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const Admin = require("../models/adminModel");
+const Frames = require("../models/FramesModel");
+const Lens = require("../models/LensModel");
+const Orders = require("../models/orderModel");
+const Users = require("../models/userModel");
 
 //@desc Gets All Admin
 //@route GET /api/admins/all
@@ -55,6 +59,26 @@ const DeleteSingleAdmin = asyncHandler( async (req, res) => {
         throw new Error("Admin Not Found");
     }
     const deletedAdmin = await Admin.findByIdAndDelete(req.params.id);
+    await Users.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await Frames.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await Lens.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await Orders.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
     res.status(200).json(deletedAdmin);
 });
 
