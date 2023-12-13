@@ -5,6 +5,7 @@ const Frames = require("../models/FramesModel");
 const Lens = require("../models/LensModel");
 const Orders = require("../models/orderModel");
 const Users = require("../models/userModel");
+const Prescriptions = require("../models/prescriptionModel");
 
 //@desc Gets All Admin
 //@route GET /api/admins/all
@@ -60,22 +61,27 @@ const DeleteSingleAdmin = asyncHandler( async (req, res) => {
     }
     const deletedAdmin = await Admin.findByIdAndDelete(req.params.id);
     await Users.deleteMany({ adminId: req.params.id }).then(function(){
-        console.log("Data deleted"); // Success
+        console.log("Users Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });
     await Frames.deleteMany({ adminId: req.params.id }).then(function(){
-        console.log("Data deleted"); // Success
+        console.log("Frames Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });
     await Lens.deleteMany({ adminId: req.params.id }).then(function(){
-        console.log("Data deleted"); // Success
+        console.log("Lens Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });
     await Orders.deleteMany({ adminId: req.params.id }).then(function(){
-        console.log("Data deleted"); // Success
+        console.log("Orders Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await Prescriptions.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Prescriptions Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });
