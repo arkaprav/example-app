@@ -60,6 +60,11 @@ const createSingleUser = asyncHandler( async (req, res) => {
         res.status(404);
         throw new Error("All Fields are mandatory");
     }
+    const exists = await Users.find({ email });
+    if(exists){
+        res.status(403);
+        throw new Error("User Email already Exists");
+    }
     const user = await Users.create({
         name,
         email,
