@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-
+const bcrypt = require("bcrypt");
 const Admin = require("../models/adminModel");
 
 //@desc Gets All Admin
@@ -65,9 +65,10 @@ const createSingleAdmin = asyncHandler( async (req, res) => {
         res.status(403);
         throw new Error("Admin Email already Exists");
     }
+    const hashedPass = await bcrypt.hash(password, 10);
     const admin = await Admin.create({
         email,
-        password
+        password: hashedPass
     });
     res.status(200).json(admin);
 });
