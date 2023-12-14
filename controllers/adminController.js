@@ -6,6 +6,8 @@ const Lens = require("../models/LensModel");
 const Orders = require("../models/orderModel");
 const Users = require("../models/userModel");
 const Prescriptions = require("../models/prescriptionModel");
+const ContactLens = require("../models/contactLensModel");
+const StoreDetails = require("../models/storeDetailModel");
 
 //@desc Gets All Admin
 //@route GET /api/admins/all
@@ -75,6 +77,11 @@ const DeleteSingleAdmin = asyncHandler( async (req, res) => {
     }).catch(function(error){
         console.log(error); // Failure
     });
+    await ContactLens.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Contact Lens Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
     await Orders.deleteMany({ adminId: req.params.id }).then(function(){
         console.log("Orders Data deleted"); // Success
     }).catch(function(error){
@@ -82,6 +89,11 @@ const DeleteSingleAdmin = asyncHandler( async (req, res) => {
     });
     await Prescriptions.deleteMany({ adminId: req.params.id }).then(function(){
         console.log("Prescriptions Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await StoreDetails.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Store Details Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });
