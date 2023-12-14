@@ -17,7 +17,7 @@ const loginSingleAdmin = asyncHandler( async (req, res) => {
         throw new Error("Invalid email or password");
     }
     const user = await Admin.findOne({ email });
-    if(user && bcrypt.compare(password, user.password)){
+    if(user && await bcrypt.compare(password, user.password)){
         const accessToken = jwt.sign({
             user: {
                 id: user.id,
