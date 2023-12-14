@@ -24,14 +24,14 @@ const createPrescription = asyncHandler( async (req, res) => {
         res.status(401);
         throw new Error("discountedPrize is mandatory");
     }
-    const order = await Prescriptions.create({
+    const pres = await Prescriptions.create({
         prescription: JSON.stringify(prescription),
         lensID,
         lenstype,
         customerID,
         adminId
     });
-    res.status(201).json(order);
+    res.status(201).json(pres);
 });
 
 //@desc Get All Prescriptions

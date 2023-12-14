@@ -5,7 +5,7 @@ const { loginSingleAdmin } = require("../controllers/loginController");
 const router = express.Router();
 
 router.route("/all").get(getAllAdmin);
-router.route("/").post(createSingleAdmin);
+router.route("/create").post(createSingleAdmin);
 router.route("/:id").get(getSingleAdmin).put(updateSingleAdmin).delete(DeleteSingleAdmin);
 router.route("/login").post(loginSingleAdmin);
 
