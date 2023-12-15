@@ -5,6 +5,7 @@ const Lens = require("../models/LensModel");
 //@route /api/lenses/create
 //route private
 const createLens = asyncHandler( async (req, res) => {
+    console.log(req.body);
     const adminId = req.user.id;
     const { 
         code,
@@ -13,7 +14,7 @@ const createLens = asyncHandler( async (req, res) => {
         color,
         coating,
         design,
-        ind,
+        index,
         quality,
         material,
         hsn_code,
@@ -31,7 +32,7 @@ const createLens = asyncHandler( async (req, res) => {
         !color||
         !coating||
         !design||
-        !ind === '' ||
+        !index === '' ||
         !quality === '' ||
         !material||
         !hsn_code === '' ||
@@ -46,18 +47,19 @@ const createLens = asyncHandler( async (req, res) => {
         throw new Error("All Fields are mandatory");
     }
     const exists = await Lens.findOne({ code, name, brand, adminId });
+    console.log(exists);
     if(exists){
         res.status(401);
         throw new Error("Frame already exists");
     }
-    const frame = await Lens.create({
+    const lens = await Lens.create({
         code,
         name,
         brand,
         color,
         coating,
         design,
-        ind,
+        ind:index,
         quality,
         material,
         hsn_code,
@@ -69,7 +71,8 @@ const createLens = asyncHandler( async (req, res) => {
         inventory,
         adminId
     });
-    res.status(201).json(frame);
+    console.log(lens);
+    res.status(201).json(lens);
 });
 
 //@desc Get All lenses
