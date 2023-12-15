@@ -18,6 +18,10 @@ const prescriptionModel = mongoose.Schema(
             type: String,
             required: [true, "prescription is required"]
         },
+        orderId: {
+            type: String,
+            required: [true, "orderId is required"]
+        },
         adminId:{
             type: String,
             required:[true, "Admin ID is required"]

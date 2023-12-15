@@ -6,7 +6,7 @@ const Prescriptions = require("../models/prescriptionModel");
 //route private
 const createPrescription = asyncHandler( async (req, res) => {
     const adminId = req.user.id;
-    const { customerID, lensID, lenstype, prescription } = req.body;
+    const { customerID, lensID, lenstype, orderId, prescription } = req.body;
     if(!prescription.length === 0){
         res.status(401);
         throw new Error("products are mandatory");
@@ -14,11 +14,15 @@ const createPrescription = asyncHandler( async (req, res) => {
     
     if(!lensID === ''){
         res.status(401);
-        throw new Error("orderTotal is mandatory");
+        throw new Error("lensID is mandatory");
     }
     if(!lenstype === ''){
         res.status(401);
-        throw new Error("orderDiscount is mandatory");
+        throw new Error("lenstype is mandatory");
+    }
+    if(!orderId === ''){
+        res.status(401);
+        throw new Error("orderId is mandatory");
     }
     if(!customerID === ''){
         res.status(401);
@@ -29,6 +33,7 @@ const createPrescription = asyncHandler( async (req, res) => {
         lensID,
         lenstype,
         customerID,
+        orderId,
         adminId
     });
     res.status(201).json(pres);
@@ -71,4 +76,17 @@ const updateSinglePrescription = asyncHandler( async (req, res) => {
     res.status(200).json(updatedPrescription);
 });
 
-module.exports = { createPrescription, getAllPrescription, getSinglePrescription, updateSinglePrescription };
+//@desc Delete Single Prescription
+//@route /api/prescriptions/:id
+//route private
+const deleteSinglePrescription = asyncHandler( async (req, res) => {
+    const prescription = await Prescriptions.findOne({ _id: req.params.id, adminId: req.user.id });
+    if(!prescription){
+        res.status(404);
+        throw new Error("Prescription Not Found");
+    }
+    const deletedPrescription = await Prescriptions.findByIdAndDelete(req.params.id, req.body);
+    res.status(200).json(deletedPrescription);
+});
+
+module.exports = { createPrescription, getAllPrescription, getSinglePrescription, updateSinglePrescription, deleteSinglePrescription };

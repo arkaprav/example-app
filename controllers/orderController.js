@@ -1,10 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const Orders = require("../models/orderModel");
+const Prescription = require("../models/prescriptionModel");
 
 //@desc Creates Orders
 //@route /api/orders/create
 //route private
 const createOrders = asyncHandler( async (req, res) => {
+    console.log(req.body);
     const adminId = req.user.id;
     const {
         products,
@@ -40,6 +42,16 @@ const createOrders = asyncHandler( async (req, res) => {
         res.status(401);
         throw new Error("mop is mandatory");
     }
+    console.log({
+        products: JSON.stringify(products),
+        orderTotal,
+        orderDiscount,
+        discountedPrize,
+        amountPaid,
+        customerID,
+        mop,
+        adminId
+    });
     const order = await Orders.create({
         products: JSON.stringify(products),
         orderTotal,
@@ -90,4 +102,22 @@ const updateSingleOrders = asyncHandler( async (req, res) => {
     res.status(200).json(updatedOrder);
 });
 
-module.exports = { createOrders, getAllOrders, getSingleOrders, updateSingleOrders };
+//@desc Delete Single Orders
+//@route /api/orders/:id
+//route private
+const deleteSingleOrders = asyncHandler( async (req, res) => {
+    const order = await Orders.findOne({ _id: req.params.id, adminId: req.user.id });
+    if(!order){
+        res.status(404);
+        throw new Error("User Not Found");
+    }
+    const deletedOrders = await Orders.findByIdAndDelete(req.params.id, req.body);
+    await Prescription.deleteMany({ orderId: req.params.id }).then(function(){
+        console.log("Prescription Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    res.status(200).json(deletedOrders);
+});
+
+module.exports = { createOrders, getAllOrders, getSingleOrders, updateSingleOrders, deleteSingleOrders };
