@@ -44,19 +44,47 @@ const createPrescription = asyncHandler( async (req, res) => {
 //route private
 const getAllPrescription = asyncHandler( async (req, res) => {
     const prescriptions = await Prescriptions.find({ adminId: req.user.id });
-    res.status(200).json(prescriptions);
+    const pres = []
+    for( let i = 0; i < prescriptions.length; i++){
+        const data = {
+            _id:prescriptions[i]._id,
+            customerID:prescriptions[i].customerID,
+            lensID:prescriptions[i].lensID,
+            lenstype:prescriptions[i].lenstype,
+            prescription:JSON.parse(JSON.parse(prescriptions[i].prescription)),
+            orderId:prescriptions[i].orderId,
+            adminId:prescriptions[i].adminId,
+            createdAt:prescriptions[i].createdAt,
+            updatedAt:prescriptions[i].updatedAt,
+            __v:prescriptions[i].__v,
+        }
+        pres.push(data);
+    }
+    res.status(200).json(pres);
 });
 
 //@desc Get Single Prescription
 //@route /api/prescriptions/:id
 //route private
 const getSinglePrescription = asyncHandler( async (req, res) => {
-    const prescription = await Prescriptions.findOne({ _id: req.params.id, adminId: req.user.id });
-    if(!prescription){
+    const pres = await Prescriptions.findOne({ _id: req.params.id, adminId: req.user.id });
+    if(!pres){
         res.status(404);
         throw new Error("prescription Not Found");
     }
-    res.status(200).json(prescription);
+    const data = {
+        _id:pres._id,
+        customerID:pres.customerID,
+        lensID:pres.lensID,
+        lenstype:pres.lenstype,
+        prescription:JSON.parse(JSON.parse(pres.prescription)),
+        orderId:pres.orderId,
+        adminId:pres.adminId,
+        createdAt:pres.createdAt,
+        updatedAt:pres.updatedAt,
+        __v:pres.__v,
+    }
+    res.status(200).json(data);
 });
 
 //@desc Update Single Prescription

@@ -70,7 +70,24 @@ const createOrders = asyncHandler( async (req, res) => {
 //route private
 const getAllOrders = asyncHandler( async (req, res) => {
     const orders = await Orders.find({ adminId: req.user.id });
-    res.status(200).json(orders);
+    const pres = []
+    for( let i = 0; i < orders.length; i++){
+        const data = {
+            _id:orders[i]._id,
+            products:JSON.parse(orders[i].products),
+            orderTotal:orders[i].orderTotal,
+            orderDiscount:orders[i].orderDiscount,
+            discountedPrize:orders[i].discountedPrize,
+            amountPaid:orders[i].amountPaid,
+            customerID:orders[i].customerID,
+            mop:orders[i].customerID,
+            createdAt:orders[i].createdAt,
+            updatedAt:orders[i].updatedAt,
+            __v:orders[i].__v,
+        }
+        pres.push(data);
+    }
+    res.status(200).json(pres);
 });
 
 //@desc Get Single Orders
@@ -82,7 +99,20 @@ const getSingleOrders = asyncHandler( async (req, res) => {
         res.status(404);
         throw new Error("Order Not Found");
     }
-    res.status(200).json(Order);
+    const data = {
+        _id:Order._id,
+        products:JSON.parse(Order.products),
+        orderTotal:Order.orderTotal,
+        orderDiscount:Order.orderDiscount,
+        discountedPrize:Order.discountedPrize,
+        amountPaid:Order.amountPaid,
+        customerID:Order.customerID,
+        mop:Order.customerID,
+        createdAt:Order.createdAt,
+        updatedAt:Order.updatedAt,
+        __v:Order.__v,
+    }
+    res.status(200).json(data);
 });
 
 //@desc Update Single Orders
