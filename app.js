@@ -16,7 +16,7 @@ require("dotenv").config();
 
 ConnectDB();
 
-var allowedOrigins = ['http://localhost:3000', 'https://opticalstore.vercel.app'];
+var allowedOrigins = ['http://localhost:3000', 'http://localhost:1212', 'https://opticalstore.vercel.app'];
 app.use(cors({
   origin: function(origin, callback){
     // allow requests with no origin 
