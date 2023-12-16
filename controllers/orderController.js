@@ -34,7 +34,7 @@ const createOrders = asyncHandler( async (req, res) => {
         res.status(401);
         throw new Error("discountedPrize is mandatory");
     }
-    if(!amountPaid){
+    if(!amountPaid === ''){
         res.status(401);
         throw new Error("amountPaid is mandatory");
     }
