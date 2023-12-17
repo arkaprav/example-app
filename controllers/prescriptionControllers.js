@@ -36,7 +36,18 @@ const createPrescription = asyncHandler( async (req, res) => {
         orderId,
         adminId
     });
-    res.status(201).json(pres);
+    const data = {
+        _id:pres._id,
+        customerID:pres.customerID,
+        lensID:pres.lensID,
+        lenstype:pres.lenstype,
+        prescription:JSON.parse(JSON.parse(pres.prescription)),
+        orderId:pres.orderId,
+        createdAt:pres.createdAt,
+        updatedAt:pres.updatedAt,
+        __v:pres.__v,
+    }
+    res.status(201).json(data);
 });
 
 //@desc Get All Prescriptions

@@ -61,7 +61,20 @@ const createOrders = asyncHandler( async (req, res) => {
         mop,
         adminId
     });
-    res.status(201).json(order);
+    const data = {
+        _id:order._id,
+        products:JSON.parse(order.products),
+        orderTotal:order.orderTotal,
+        orderDiscount:order.orderDiscount,
+        discountedPrize:order.discountedPrize,
+        amountPaid:order.amountPaid,
+        customerID:order.customerID,
+        mop:order.mop,
+        createdAt:order.createdAt,
+        updatedAt:order.updatedAt,
+        __v:order.__v,
+    }
+    res.status(201).json(data);
 });
 
 //@desc Get All Order
