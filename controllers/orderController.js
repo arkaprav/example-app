@@ -6,7 +6,6 @@ const Prescription = require("../models/prescriptionModel");
 //@route /api/orders/create
 //route private
 const createOrders = asyncHandler( async (req, res) => {
-    console.log(req.body);
     const adminId = req.user.id;
     const {
         products,
@@ -125,7 +124,7 @@ const updateSingleOrders = asyncHandler( async (req, res) => {
         throw new Error("Order Not Found");
     }
     const { products } = req.body;
-    if(products){
+    if(products !== null){
         req.body.products = JSON.stringify(products);
     }
     const updatedOrder = await Orders.findByIdAndUpdate(req.params.id, req.body);
