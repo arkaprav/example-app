@@ -23,7 +23,7 @@ const createFrame = asyncHandler( async (req, res) => {
         base_price,
         purchase_price,
         retail_price,
-        discount_price,
+        discounted_price,
         inventory,
     } = req.body;
     if(
@@ -43,7 +43,7 @@ const createFrame = asyncHandler( async (req, res) => {
         !base_price  === '' ||
         !purchase_price  === '' ||
         !retail_price  === '' ||
-        !discount_price  === '' ||
+        !discounted_price  === '' ||
         !inventory === '' 
     ){
         res.status(401);
@@ -71,7 +71,7 @@ const createFrame = asyncHandler( async (req, res) => {
         base_price,
         purchase_price,
         retail_price,
-        discount_price,
+        discounted_price,
         inventory,
         adminId
     });
