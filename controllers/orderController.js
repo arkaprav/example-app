@@ -15,6 +15,7 @@ const createOrders = asyncHandler( async (req, res) => {
         amountPaid,
         customerID,
         mop,
+        delivaryStatus
     } = req.body;
     if(!products.length === 0){
         res.status(401);
@@ -41,16 +42,6 @@ const createOrders = asyncHandler( async (req, res) => {
         res.status(401);
         throw new Error("mop is mandatory");
     }
-    console.log({
-        products: JSON.stringify(products),
-        orderTotal,
-        orderDiscount,
-        discountedPrize,
-        amountPaid,
-        customerID,
-        mop,
-        adminId
-    });
     const order = await Orders.create({
         products: JSON.stringify(products),
         orderTotal,
@@ -59,6 +50,7 @@ const createOrders = asyncHandler( async (req, res) => {
         amountPaid,
         customerID,
         mop,
+        delivaryStatus,
         adminId
     });
     const data = {
@@ -70,6 +62,7 @@ const createOrders = asyncHandler( async (req, res) => {
         amountPaid:order.amountPaid,
         customerID:order.customerID,
         mop:order.mop,
+        delivaryStatus:order.delivaryStatus,
         createdAt:order.createdAt,
         updatedAt:order.updatedAt,
         __v:order.__v,
@@ -93,6 +86,7 @@ const getAllOrders = asyncHandler( async (req, res) => {
             amountPaid:orders[i].amountPaid,
             customerID:orders[i].customerID,
             mop:orders[i].mop,
+            delivaryStatus:orders[i].delivaryStatus,
             createdAt:orders[i].createdAt,
             updatedAt:orders[i].updatedAt,
             __v:orders[i].__v,
@@ -120,6 +114,7 @@ const getSingleOrders = asyncHandler( async (req, res) => {
         amountPaid:Order.amountPaid,
         customerID:Order.customerID,
         mop:Order.mop,
+        delivaryStatus:Order.delivaryStatus,
         createdAt:Order.createdAt,
         updatedAt:Order.updatedAt,
         __v:Order.__v,

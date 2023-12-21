@@ -34,6 +34,10 @@ const orderModel = mongoose.Schema(
             type: String,
             required: [true, "mop is required"],
         },
+        delivaryStatus:{
+            type: String,
+            required: [true, "delivaryStatus is required"],
+        },
         adminId:{
             type: String,
             required:[true, "Admin ID is required"]
