@@ -11,7 +11,7 @@ const createUser = asyncHandler( async (req, res) => {
         res.status(401);
         throw new Error("All Fields are mandatory");
     }
-    const exists = await Users.findOne({ email, adminId });
+    const exists = await Users.findOne({ adminId });
     if(exists){
         res.status(401);
         throw new Error("User Email already exists");
