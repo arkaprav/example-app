@@ -80,7 +80,7 @@ const createTransaction = asyncHandler( async (req, res) => {
 });
 
 const deleteTransaction = asyncHandler( async (req, res) => {
-    const transaction = await transactionModel.findOne({ _id: req.params.id, adminId: req.user.id });
+    const transaction = await transactionModel.findOne({ orderId: req.params.id, adminId: req.user.id });
     if(!transaction){
         res.status(404);
         throw new Error("transaction not found");
