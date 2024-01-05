@@ -9,6 +9,7 @@ const contactLensRoutes = require("./routes/contactLensRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const prescriptionRoutes = require("./routes/prescriptionRoutes");
 const storeDetailsRoute = require("./routes/storeDetailsRoute");
+const transactionsRoutes = require("./routes/transactionRoutes");
 const errorHandler = require('./middlewares/errorHandler');
 const ConnectDB = require("./config/dbConfig");
 
@@ -40,6 +41,7 @@ app.use("/api/contactlenses/", contactLensRoutes);
 app.use("/api/orders/", orderRoutes);
 app.use("/api/prescriptions/", prescriptionRoutes);
 app.use("/api/storedetails/", storeDetailsRoute);
+app.use("/api/transactions/", transactionsRoutes);
 app.use(errorHandler);
 
 module.exports = app;

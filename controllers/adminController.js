@@ -8,6 +8,7 @@ const Users = require("../models/userModel");
 const Prescriptions = require("../models/prescriptionModel");
 const ContactLens = require("../models/contactLensModel");
 const StoreDetails = require("../models/storeDetailModel");
+const transactionsModel = require("../models/transactionsModel");
 
 //@desc Gets All Admin
 //@route GET /api/admins/all
@@ -94,6 +95,11 @@ const DeleteSingleAdmin = asyncHandler( async (req, res) => {
     });
     await StoreDetails.deleteMany({ adminId: req.params.id }).then(function(){
         console.log("Store Details Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await transactionsModel.deleteMany({ adminId: req.params.id }).then(function(){
+        console.log("Transaction Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });

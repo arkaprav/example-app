@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Orders = require("../models/orderModel");
 const Prescription = require("../models/prescriptionModel");
+const transactionModel = require("../models/transactionsModel");
 
 //@desc Creates Orders
 //@route /api/orders/create
@@ -151,6 +152,11 @@ const deleteSingleOrders = asyncHandler( async (req, res) => {
     const deletedOrders = await Orders.findByIdAndDelete(req.params.id, req.body);
     await Prescription.deleteMany({ orderId: req.params.id }).then(function(){
         console.log("Prescription Data deleted"); // Success
+    }).catch(function(error){
+        console.log(error); // Failure
+    });
+    await transactionModel.deleteMany({ orderId: req.params.id }).then(function(){
+        console.log("Transactions Data deleted"); // Success
     }).catch(function(error){
         console.log(error); // Failure
     });
